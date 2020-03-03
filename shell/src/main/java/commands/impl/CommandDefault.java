@@ -5,6 +5,7 @@ import commands.Command;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class CommandDefault implements Command {
     private String name = "";
@@ -20,9 +21,11 @@ public class CommandDefault implements Command {
     }
 
     @Override
-    public String run(String arguments, String options) {
+    public String run(List<String> arguments) {
+        String args = String.join(" ", arguments);
+
         ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command(name, arguments, options);
+        processBuilder.command(name, args);
 
         try {
             Process process = processBuilder.start();
@@ -37,8 +40,8 @@ public class CommandDefault implements Command {
 
             int exitVal = process.waitFor();
             if (exitVal == 0) {
-                System.out.println("Success!");
-                System.out.println(output);
+//                System.out.println("Success!");
+//                System.out.println(output);
                 System.exit(0);
             }
 

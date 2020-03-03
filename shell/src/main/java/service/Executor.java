@@ -8,6 +8,7 @@ import parser.Parser;
 import parser.Substitutor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +23,6 @@ public class Executor {
             List<CommandEntity> commands = new ArrayList<>();
 
             String[] cmds = input.split("\\|");
-
             for (String cmd : cmds) {
                 List<Lexem> lexems = parser.parseLexem(cmd);
                 substitutor.substitution(lexems);
@@ -33,15 +33,15 @@ public class Executor {
                                      .arguments(lexems.stream()
                                                       .filter(lexem -> lexems.indexOf(lexem) != 0)
                                                       .map(Lexem::getWord)
-                                                      .collect(Collectors.joining(" ")))
+                                                      .collect(Collectors.toList()))
                                      .build());
             }
 
-            String output = commandExecutor.execute(commands.get(0).getName(),
-                                                    commands.get(0).getArguments());
+            String output = commandExecutor.execute(commands.get(0));
             commands.remove(0);
             for (CommandEntity command : commands) {
-                output = commandExecutor.execute(command.getName(), output);
+                command.setArguments(Collections.singletonList(output));
+                output = commandExecutor.execute(command);
             }
 
             return output;
@@ -54,7 +54,7 @@ public class Executor {
             if (lexem.getType() == LexemType.WORD_ASSIGMENT) {
                 String[] attrAndValue = input.split("=");
                 environment.putVariable(attrAndValue[0], attrAndValue[1]);
-                return attrAndValue[0] + attrAndValue[1];
+                return attrAndValue[0] + " = " + attrAndValue[1];
             }
 
             CommandEntity command =
@@ -63,9 +63,10 @@ public class Executor {
                                  .arguments(lexems.stream()
                                                   .filter(l -> lexems.indexOf(l) != 0)
                                                   .map(Lexem::getWord)
-                                                  .collect(Collectors.joining(" ")))
+                                                  .collect(Collectors.toList()))
                                  .build();
-            return commandExecutor.execute(command.getName(), command.getArguments());
+
+            return commandExecutor.execute(command);
         }
 
         return "";

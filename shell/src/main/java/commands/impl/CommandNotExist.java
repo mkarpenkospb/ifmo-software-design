@@ -2,6 +2,8 @@ package commands.impl;
 
 import commands.Command;
 
+import java.util.List;
+
 public class CommandNotExist implements Command {
     private String name = "";
 
@@ -16,7 +18,7 @@ public class CommandNotExist implements Command {
     }
 
     @Override
-    public String run(String arguments, String options) {
+    public String run(List<String> arguments) {
         return "command not found: " + name;
     }
 }

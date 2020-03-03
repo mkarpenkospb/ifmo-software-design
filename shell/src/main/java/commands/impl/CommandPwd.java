@@ -2,8 +2,9 @@ package commands.impl;
 
 import commands.Command;
 
-public class CommandPwd implements Command {
+import java.util.List;
 
+public class CommandPwd implements Command {
     private String name = "";
 
     @Override
@@ -17,7 +18,7 @@ public class CommandPwd implements Command {
     }
 
     @Override
-    public String run(String arguments, String options) {
+    public String run(List<String> arguments) {
         return System.getProperty("user.dir");
     }
 }

@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Environment {
-
     private static String currentPath = System.getProperty("user.dir");
     private static Map<String, Command> commands = new HashMap<>();
     private static Map<String, String> variables = new HashMap<>();
@@ -18,6 +17,15 @@ public class Environment {
         commands.put("cat", new CommandCat());
         commands.put("pwd", new CommandPwd());
         commands.put("wc", new CommandWc());
+    }
+
+    static {
+        variables.put("PWD", "/home/pagrom");
+        variables.put("HOME", "/home/pagrom/");
+        variables.put("PATH", "/home/pagrom/.local/bin");
+        variables.put("USER", "pagrom");
+        variables.put("SHELL", "/usr/bin/zsh");
+        variables.put("LOGNAME", "pagrom");
     }
 
     public static class SingletonHolder {
@@ -35,12 +43,10 @@ public class Environment {
 
     public void putVariable(String argumentName, String argumentValue) {
         variables.put(argumentName, argumentValue);
-        System.out.println("DEBUG --- " + "VARS > " + variables);
     }
 
     public String getVariable(String variableName) {
-        System.out.println("DEBUG --- " + "VARS > " + variables);
-        return variables.get(variableName);
+        return variables.getOrDefault(variableName, "Variable not exist!");
     }
 
     public static String getCurrentPath() {
