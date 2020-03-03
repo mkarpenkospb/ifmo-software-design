@@ -2,12 +2,12 @@ package commands.impl;
 
 import commands.Command;
 
-public class CommandExit implements Command {
-    private String name;
+public class CommandNotExist implements Command {
+    private String name = "";
 
     @Override
     public String name() {
-        return "exit";
+        return "";
     }
 
     @Override
@@ -17,7 +17,6 @@ public class CommandExit implements Command {
 
     @Override
     public String run(String arguments, String options) {
-        System.exit(0);
-        return null;
+        return "command not found: " + name;
     }
 }

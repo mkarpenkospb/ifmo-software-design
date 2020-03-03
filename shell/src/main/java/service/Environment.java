@@ -29,7 +29,8 @@ public class Environment {
     }
 
     public Command getCommand(String commandName) {
-        return commands.getOrDefault(commandName, new CommandDefault());
+//        return commands.getOrDefault(commandName, new CommandDefault());
+        return commands.getOrDefault(commandName, new CommandNotExist());
     }
 
     public void putVariable(String argumentName, String argumentValue) {

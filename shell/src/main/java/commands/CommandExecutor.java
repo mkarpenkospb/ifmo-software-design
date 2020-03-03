@@ -8,6 +8,8 @@ public class CommandExecutor {
 
     public String execute(String commandName, String args) {
         Command command = environment.getCommand(commandName);
+        command.setName(commandName);
+
         return command.run(args, " ");
     }
 }

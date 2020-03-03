@@ -4,10 +4,7 @@ import commands.Command;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class CommandWc implements Command {
     private String name = "";
@@ -22,34 +19,50 @@ public class CommandWc implements Command {
         this.name = name;
     }
 
+    // TODO: добавить на строку
     @Override
     public String run(String arguments, String options) {
-        File file = new File(arguments);
+        int totalWords = 0;
+        int totalLines = 0;
+        int totalBytes = 0;
 
-        if (file.isDirectory())
-            return "This path is directory";
+        List<String> output = new ArrayList<>();
+        String[] files = arguments.split(" ");
+        for (String fileName : files) {
+            File file = new File(fileName);
 
-        // TODO: добавить на строку
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            return "No such file";
+            if (file.isDirectory())
+                return "This path is directory";
+
+            Scanner scanner;
+            try {
+                scanner = new Scanner(file);
+            } catch (FileNotFoundException e) {
+                return "No such file";
+            }
+
+            int words = 0;
+            int lines = 0;
+            int bytes = 0;
+
+            while (Objects.requireNonNull(scanner).hasNextLine()) {
+                List<String> line = Arrays.asList(scanner.nextLine().split(" "));
+                bytes += line.stream().mapToInt(String::length).sum();
+                words += line.size();
+                lines++;
+            }
+            totalBytes += bytes;
+            totalLines += lines;
+            totalWords += words;
+            scanner.close();
+
+            output.add(lines + " " + words + " " + bytes + " " + file.getPath() + "\n");
         }
 
-        int words = 0;
-        int lines = 0;
-        int bytes = 0;
-
-        while (Objects.requireNonNull(scanner).hasNextLine()) {
-            List<String> line = Arrays.asList(scanner.nextLine().split(" "));
-            bytes += line.stream().mapToInt(String::length).sum();
-            words += line.size();
-            lines++;
+        if (files.length > 1) {
+            output.add(totalLines + " " + totalWords + " " + totalBytes + " " + "total" + "\n");
         }
-        scanner.close();
-//        System.out.println(lines + " " + words + " " + bytes);
 
-        return lines + " " + words + " " + bytes;
+        return String.join("", output);
     }
 }
