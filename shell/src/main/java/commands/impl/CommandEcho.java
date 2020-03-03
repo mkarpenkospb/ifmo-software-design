@@ -29,6 +29,6 @@ public class CommandEcho implements Command {
             result.append(word).append(" ");
         }
 
-        return result.toString();
+        return result.deleteCharAt(result.length() - 1).toString();
     }
 }

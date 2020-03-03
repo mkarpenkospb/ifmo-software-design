@@ -34,7 +34,7 @@ public class EnvironmentTest {
     }
 
     @Test
-    public void getCurrentPath() {
+    public void testGetCurrentPath() {
         assertThat(Environment.getCurrentPath()).isEqualTo(System.getProperty("user.dir"));
     }
 }

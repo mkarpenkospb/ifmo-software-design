@@ -19,6 +19,6 @@ public class CommandNotExist implements Command {
 
     @Override
     public String run(List<String> arguments) {
-        return "command not found: " + name;
+        return "Command not found: " + name;
     }
 }

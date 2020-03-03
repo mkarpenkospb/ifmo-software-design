@@ -32,6 +32,7 @@ public class CommandCat implements Command {
             stream.forEach(s -> contentBuilder.append(s).append("\n"));
         } catch (IOException e) {
             e.getMessage();
+            contentBuilder.append("File is not exist!");
         }
 
         return contentBuilder.toString();

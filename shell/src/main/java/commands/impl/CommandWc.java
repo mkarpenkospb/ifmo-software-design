@@ -36,6 +36,9 @@ public class CommandWc implements Command {
 
             File file = new File(fileName);
 
+            if (file.isDirectory())
+                return "This path is directory!";
+
             if (!file.isFile()) {
                 Scanner scanner = new Scanner(args);
                 while (Objects.requireNonNull(scanner).hasNextLine()) {
@@ -48,9 +51,6 @@ public class CommandWc implements Command {
 
                 return String.join("", output);
             }
-
-            if (file.isDirectory())
-                return "This path is directory";
 
             Scanner scanner;
             try {
