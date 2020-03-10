@@ -14,6 +14,7 @@ public class Environment {
     static {
         commands.put("echo", new CommandEcho());
         commands.put("exit", new CommandExit());
+        commands.put("grep", new CommandGrep());
         commands.put("cat", new CommandCat());
         commands.put("pwd", new CommandPwd());
         commands.put("wc", new CommandWc());
