@@ -2,6 +2,8 @@ package commands;
 
 import service.Environment;
 
+import java.io.IOException;
+
 public class CommandExecutor {
     Environment environment = Environment.getInstance();
 
