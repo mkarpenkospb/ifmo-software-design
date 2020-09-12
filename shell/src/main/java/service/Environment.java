@@ -18,6 +18,8 @@ public class Environment {
         commands.put("cat", new CommandCat());
         commands.put("pwd", new CommandPwd());
         commands.put("wc", new CommandWc());
+        commands.put("ls", new CommandLs());
+        commands.put("cd", new CommandCd());
     }
 
     static {
